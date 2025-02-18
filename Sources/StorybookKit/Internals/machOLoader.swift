@@ -22,14 +22,14 @@
 import Foundation
 import MachO
 
-extension Book {
+public extension Book {
 
   // MARK: Internal
 
   /// Should match `StorybookPageMacro._magicSubstring`
   static let _magicSubstring: String = "__🤖🛠️_StorybookMagic_"
 
-  static func findAllBookProviders(
+  public static func findAllBookProviders(
     filterByStorybookPageMacro: Bool = false
   ) -> [any BookProvider.Type]? {
     let moduleName = Bundle.main.bundleURL.deletingPathExtension().lastPathComponent

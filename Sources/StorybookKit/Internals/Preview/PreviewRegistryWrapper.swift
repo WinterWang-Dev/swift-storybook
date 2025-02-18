@@ -4,7 +4,7 @@ import SwiftUI
 import UIKit
 
 @available(iOS 17.0, *)
-struct PreviewRegistryWrapper: Comparable {
+public struct PreviewRegistryWrapper: Comparable {
 
   let previewType: any DeveloperToolsSupport.PreviewRegistry.Type
   let module: String
@@ -14,12 +14,12 @@ struct PreviewRegistryWrapper: Comparable {
     self.module = previewType.fileID.components(separatedBy: "/").first!
   }
 
-  var fileID: String { previewType.fileID }
+  public var fileID: String { previewType.fileID }
   var line: Int { previewType.line }
   var column: Int { previewType.column }
-  
+    
   @MainActor
-  var displayName: String? {
+  public var displayName: String? {
     guard let rawPreview = try? previewType.makePreview() else {
       return nil
     }
@@ -28,7 +28,7 @@ struct PreviewRegistryWrapper: Comparable {
   }
 
   @MainActor
-  var makeView: (@MainActor () -> any View) {
+  public var makeView: (@MainActor () -> any View) {
     guard let rawPreview = try? previewType.makePreview() else {
       return { EmptyView() }
     }
@@ -146,7 +146,7 @@ struct PreviewRegistryWrapper: Comparable {
 
   // MARK: Comparable
 
-  static func < (lhs: PreviewRegistryWrapper, rhs: PreviewRegistryWrapper) -> Bool {
+  public static func < (lhs: PreviewRegistryWrapper, rhs: PreviewRegistryWrapper) -> Bool {
     if lhs.module == rhs.module {
       return lhs.line < rhs.line
     }
@@ -156,7 +156,7 @@ struct PreviewRegistryWrapper: Comparable {
 
   // MARK: Equatable
 
-  static func == (lhs: PreviewRegistryWrapper, rhs: PreviewRegistryWrapper) -> Bool {
+  public static func == (lhs: PreviewRegistryWrapper, rhs: PreviewRegistryWrapper) -> Bool {
     lhs.line == rhs.line && lhs.module == rhs.module
   }
 
