@@ -14,10 +14,14 @@ public struct PreviewRegistryWrapper: Comparable {
     self.module = previewType.fileID.components(separatedBy: "/").first!
   }
 
-  public var fileID: String { previewType.fileID }
+  var fileID: String { previewType.fileID }
   var line: Int { previewType.line }
   var column: Int { previewType.column }
-    
+  
+  public var fileName: String {
+    fileID.split(separator: "/").last?.replacingOccurrences(of: ".swift", with: "") ?? fileID
+  }
+  
   @MainActor
   public var displayName: String? {
     guard let rawPreview = try? previewType.makePreview() else {
